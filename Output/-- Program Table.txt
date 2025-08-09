@@ -1,0 +1,113 @@
+-- Program Table
+CREATE TABLE Program (
+  Program_ID INT PRIMARY KEY,
+  Program_Name VARCHAR(40) NOT NULL,
+  Duration INT NOT NULL,
+  Description VARCHAR(100) NOT NULL
+);
+
+-- Student Table
+CREATE TABLE Student (
+  Student_ID NUMBER(18) PRIMARY KEY,
+  Student_Name CHARACTER(40) NOT NULL,
+  Enrolled_Date DATE NOT NULL,
+  StudentEmail CHARACTER(40) NOT NULL,
+  DOB DATE NOT NULL,
+  ProgramID Number(16),
+  FOREIGN KEY (ProgramID) REFERENCES Program(ProgramID)
+);
+
+-- Module Table
+CREATE TABLE Module (
+  ModuleID INT PRIMARY KEY,
+  ModuleName VARCHAR(50) NOT NULL,
+  CreditHours INT NOT NULL
+);
+
+-- Std_Mod Table (Student-Module)
+CREATE TABLE Std_Mod (
+  StudentID INT,
+  ModuleID INT,
+  FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+  FOREIGN KEY (ModuleID) REFERENCES Module(ModuleID),
+  PRIMARY KEY (StudentID, ModuleID)
+);
+
+-- Teacher Table
+CREATE TABLE Teacher (
+  TeacherID INT PRIMARY KEY,
+  TeacherName VARCHAR(40) NOT NULL,
+  TeacherEmail VARCHAR(40) NOT NULL,
+  Specialization VARCHAR(50) NOT NULL
+);
+
+-- Std_Mod_Tec Table (Student-Module-Teacher)
+CREATE TABLE Std_Mod_Tec (
+  StudentID INT,
+  ModuleID INT,
+  TeacherID INT,
+  FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+  FOREIGN KEY (ModuleID) REFERENCES Module(ModuleID),
+  FOREIGN KEY (TeacherID) REFERENCES Teacher(TeacherID),
+  PRIMARY KEY (StudentID, ModuleID, TeacherID)
+);
+
+-- Announcement Table
+CREATE TABLE Announcement (
+  AnnouncementID INT PRIMARY KEY,
+  AnnounceTitle VARCHAR(50) NOT NULL,
+  Content VARCHAR(500) NOT NULL,
+  PostDate DATE NOT NULL
+);
+
+-- Std_Mod_Anno Table (Student-Module-Announcement)
+CREATE TABLE Std_Mod_Anno (
+  StudentID INT,
+  ModuleID INT,
+  AnnouncementID INT,
+  FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+  FOREIGN KEY (ModuleID) REFERENCES Module(ModuleID),
+  FOREIGN KEY (AnnouncementID) REFERENCES Announcement(AnnouncementID),
+  PRIMARY KEY (StudentID, ModuleID, AnnouncementID)
+);
+
+-- Resources Table
+CREATE TABLE Resources_ (
+  ResourceID INT PRIMARY KEY,
+  ResourceTitle VARCHAR(50) NOT NULL,
+  ResourceDura INT NOT NULL,
+  Type VARCHAR(30) NOT NULL
+);
+
+-- Std_Mod_Res Table (Student-Module-Resource)
+CREATE TABLE Std_Mod_Res (
+  StudentID INT,
+  ModuleID INT,
+  ResourceID INT,
+  CompletionStatus VARCHAR(30) NOT NULL,
+  FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+  FOREIGN KEY (ModuleID) REFERENCES Module(ModuleID),
+  FOREIGN KEY (ResourceID) REFERENCES Resources_(ResourceID),
+  PRIMARY KEY (StudentID, ModuleID, ResourceID)
+);
+
+-- Assessment Table
+CREATE TABLE Assessment (
+  AssessmentID INT PRIMARY KEY,
+  AssessTitle VARCHAR(30) NOT NULL,
+  Weightage INT NOT NULL,
+  Deadline DATE NOT NULL
+);
+
+-- Std_Mod_Asse Table (Student-Module-Assessment)
+CREATE TABLE Std_Mod_Asse (
+  StudentID INT,
+  ModuleID INT,
+  AssessmentID INT,
+  MarksObtained INT NOT NULL,
+  Grade VARCHAR(10) NOT NULL,
+  FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+  FOREIGN KEY (ModuleID) REFERENCES Module(ModuleID),
+  FOREIGN KEY (AssessmentID) REFERENCES Assessment(AssessmentID),
+  PRIMARY KEY (StudentID, ModuleID, AssessmentID)
+);

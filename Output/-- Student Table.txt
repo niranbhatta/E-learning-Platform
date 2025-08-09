@@ -1,0 +1,49 @@
+-- Student Table
+CREATE TABLE Student (
+    Student_ID NUMBER(18) PRIMARY KEY,
+    Student_Name VARCHAR2(35) NOT NULL,
+    Enrolled_Date DATE NOT NULL,
+    Email VARCHAR2(35) UNIQUE,
+    DOB DATE NOT NULL,
+    Program_ID NUMBER(18) REFERENCES Program(Program_ID)
+);
+
+-- Program Table
+CREATE TABLE Program (
+    Program_ID NUMBER(18) PRIMARY KEY,
+    Program_Name VARCHAR2(22) NOT NULL,
+    Program_Description VARCHAR2(1200) NOT NULL,
+    Program_Duration NUMBER(6)
+);
+
+-- Module Table
+CREATE TABLE Module (
+    Module_ID NUMBER(12) PRIMARY KEY,
+    Module_Name VARCHAR2(22) NOT NULL,
+    Credit_Hours NUMBER(5) NOT NULL
+);
+
+-- Teacher Table
+CREATE TABLE Teacher (
+    Teacher_ID NUMBER(12) PRIMARY KEY,
+    Teacher_Name VARCHAR2(30) NOT NULL,
+    Contact NUMBER(15) UNIQUE,
+    Specialization VARCHAR2(20) NOT NULL
+);
+
+-- Assessment Table
+CREATE TABLE Assessment (
+    Assessment_ID NUMBER(22) PRIMARY KEY,
+    Assessment_Title VARCHAR2(25) NOT NULL,
+    Assessment_Description VARCHAR2(1200) NOT NULL,
+    Weightage NUMBER(5) NOT NULL,
+    Deadline DATE NOT NULL,
+    Assessment_Status VARCHAR2(30) NOT NULL
+);
+
+-- Announcement Table
+CREATE TABLE Announcement (
+    Announcement_ID NUMBER(25) PRIMARY KEY,
+    Date_Posted DATE NOT NULL,
+    Content VARCHAR2(1200) NOT NULL
+);
